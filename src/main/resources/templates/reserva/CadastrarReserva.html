@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>WebHotel</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				Cadastrar nova reserva
+			</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<form method="POST" th:action="@{/reservas/salvar}" th:object="${reserva}" class="form-vertical  js-form-loading">
+
+			<!-- MENSAGEM DE SUCESSO -->
+    		<div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+	    		<span th:text="${mensagem}"></span>
+	    		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    				<span aria-hidden="true">&times;</span>
+    			</button>
+    		</div>
+    		
+    		<!-- ALERTA DE CAMPOS VALIDADOS-->
+    		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+	    		 <div th:each="error : ${#fields.detailedErrors()}">
+	    			<span th:text="${error.message}"></span>
+	    		</div>
+    		</div>
+			
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group" th:classappend="${#fields.hasErrors('dataInicial')} ? has-error">
+						<label for="input-produto-nome">Data Início</label>
+						<input id="input-produto-nome" name="dataInicial" type="date" class="form-control" placeholder="dd/MM/yyyy"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group" th:classappend="${#fields.hasErrors('dataFinal')} ? has-error">
+						<label for="input-produto-preco">Data Fim</label>
+						<input id="input-produto-preco" name="dataFinal" type="date" class="form-control" placeholder="dd/MM/yyyy"/>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group" th:classappend="${#fields.hasErrors('hospede')} ? has-error">
+						<label for="input-produto-estoque">Hospede</label>
+						<select class="form-control" name="hospede">
+							<option value="" label="-- Selecione --"></option>
+							<option th:each="hospede : ${hospedes}" th:value="${hospede.id}" th:text="${hospede.nome}"></option>
+                    	</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group" th:classappend="${#fields.hasErrors('quarto')} ? has-error">
+						<label for="input-produto-estoque">Quarto</label>
+						<select class="form-control" name="quarto">
+							<option value="" label="-- Selecione --"></option>
+							<option th:each="quarto : ${quartos}" th:value="${quarto.id}" th:text="${quarto.numero}"></option>
+                    	</select>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Salvar</button>
+				<a th:href="@{/reservas}" class="btn  btn-default">Voltar</a>
+			</div>
+		</form>
+	</div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>WebHotel</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="table-responsive">
+		
+			<div>
+				<figure>
+					<img style="width: 10%; height: 10%;" src="/layout/images/User.png" alt="user"/>
+					<figcaption><h2 th:text="${hospede.nome}"></h2></figcaption>
+					<hr/>
+				</figure>
+			</div>
+		
+			<table id="tabela-produtos" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+				<thead class="aw-table-header-solid">
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Código: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.id}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>CPF: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.cpf}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Email: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.email}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Telefone: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.telefone}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Rua: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.endereco.logradouro}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Número: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.endereco.numero}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>Bairro: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.endereco.bairro}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 5px;"><b>Cidade: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.endereco.cidade}"></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>CEP: </b></td>
+						<td style="padding-left: 10px; padding-bottom: 10px;" th:text="${hospede.endereco.cep}"></td>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Não utilizado -->
+				</tbody>
+			</table>
+			
+			<div class="form-group">
+				<a th:href="@{/hospedes/atualizar/{codigo}(codigo=${hospede.id})}" class="btn  btn-primary" type="submit">Editar</a>
+				<a th:href="@{/hospedes/excluir/{codigo}(codigo=${hospede.id})}" class="btn  btn-primary" type="submit">Excluir</a>
+				<a th:href="@{/hospedes}" class="btn  btn-default">Voltar</a>
+			</div>
+		</div>
+	</div>
+
+</section>
+</body>
+</html>

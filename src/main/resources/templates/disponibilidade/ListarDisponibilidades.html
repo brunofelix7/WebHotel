@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>WebHotel</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>
+						Verificar disponibilidade
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		
+		<!-- PESQUISA -->
+		<form method="GET" th:action="@{/quartos/filtrar}" class="form-vertical  js-form-loading">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="input-produto-preco">Pesquisa</label>
+						<div class="form-inline">
+							<input type="date" name="dataInicial" class="form-control  aw-form-control-inline-sm" placeholder="DataInicial"/>
+							<input type="date" name="dataFinal" class="form-control  aw-form-control-inline-sm" placeholder="DataFinal"/>
+							<select class="form-control" name="quarto">
+								<option value="" label="-- Quarto --"></option>
+								<option th:each="quarto : ${quartos}" th:value="${quarto.numero}" th:text="${quarto.numero}"></option>
+                    		</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Pesquisar</button>
+				<a th:href="@{/quartos}" class="btn  btn-default">Limpar filtro</a>
+			</div>
+		</form>
+		<br/>
+		
+		<div class="table-responsive">
+			<table id="tabela-quarto" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+				<thead class="aw-table-header-solid">
+					<tr>
+						<th class="table-pesq-produto-col-preco">Andar</th>
+						<th class="table-pesq-produto-col-preco">Quarto</th>
+						<th class="table-pesq-produto-col-acoes">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="count" th:each="quarto : ${quartos}">
+						<td class="table-pesq-produto-col-preco" th:text="${quarto.andar}"></td>
+						<td class="table-pesq-produto-col-preco" th:text="${quarto.numero}"></td>
+						<td class="table-pesq-produto-col-acoes">
+							<div class="btn-group">
+								<a th:href="@{/disponibilidade/reservar)}" class="btn  btn-default btn-xs">
+									Reservar
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr id="not-count" th:if="${quartos.empty}">
+						<td colspan="5">Nenhum há quartos disponíveis.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-xs-12  col-md-8  aw-text-xs-center  aw-text-md-left">
+				<nav>
+					<ul class="pagination  pagination-sm">
+						<li><a href="#"><i class="fa  fa-angle-double-left"></i></a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#"><i class="fa  fa-angle-double-right"></i></a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-xs-12  col-md-4  aw-text-xs-center  aw-text-md-right">
+				<span class="aw-pagination-info">
+					<script>
+						var row = document.getElementById("tabela-quarto").rows.length;
+						document.write("<b>" + (row - 1) + "</b>" + " Quartos disponíveis");
+					</script>
+				</span>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>
